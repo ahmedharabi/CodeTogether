@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9b6e01c8-2d7b-49ea-a533-65aa5042a681" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Backend" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ahmedharabi&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://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@github.com/ahmedharabi/CodeTogether.git&quot;,
+    &quot;accountId&quot;: &quot;f846ed51-66d6-44cc-afec-c323694a07d9&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2ydWSUgmLu18GH4P3kb1zdMA6Uh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.app.ts.executor": "Run",
+    "Node.js.index.ts.executor": "Run",
+    "Node.js.test.ts.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "feat/auth",
+    "last_opened_file_path": "/home/ahmedharabi/WebstormProjects/codeTogether",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "ts.external.directory.path": "/home/ahmedharabi/WebstormProjects/codeTogether/Backend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager" selected="Node.js.test.ts">
+    <configuration name="app.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Backend/src/app.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/Backend/src">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Backend/src/controllers/index.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/Backend/src/controllers">
+      <method v="2" />
+    </configuration>
+    <configuration name="test.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Backend/src/test.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/Backend/src">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.test.ts" />
+        <item itemvalue="Node.js.app.ts" />
+        <item itemvalue="Node.js.index.ts" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b6e01c8-2d7b-49ea-a533-65aa5042a681" name="Changes" comment="" />
+      <created>1750164931342</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750164931342</updated>
+      <workItem from="1750164932369" duration="102000" />
+      <workItem from="1750165050523" duration="27000" />
+      <workItem from="1750165114759" duration="994000" />
+      <workItem from="1750692125895" duration="4000" />
+      <workItem from="1750692156368" duration="9816000" />
+      <workItem from="1750760651370" duration="9000" />
+      <workItem from="1750763353831" duration="6915000" />
+      <workItem from="1750789784022" duration="1589000" />
+      <workItem from="1750845559337" duration="11124000" />
+      <workItem from="1750882390310" duration="13208000" />
+      <workItem from="1750941266435" duration="7000" />
+      <workItem from="1751313897856" duration="1793000" />
+      <workItem from="1751351938248" duration="20334000" />
+      <workItem from="1751409616065" duration="59000" />
+      <workItem from="1751545537838" duration="4295000" />
+      <workItem from="1751576829554" duration="1649000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Backend/src/app.js" />
+        <option value="$PROJECT_DIR$/Backend/src/lib/passport-config.js" />
+        <option value="$PROJECT_DIR$/Backend/src/utils/ensureAuth.js" />
+        <option value="$PROJECT_DIR$/Backend/src/routes/auth.route.js" />
+        <option value="$PROJECT_DIR$/Backend/src/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/Backend/src/app.js" />
+        <option value="$PROJECT_DIR$/Backend/src/lib/passport-config.js" />
+        <option value="$PROJECT_DIR$/Backend/src/routes/auth.route.js" />
+        <option value="$PROJECT_DIR$/Backend/src/utils/ensureAuth.js" />
+        <option value="$PROJECT_DIR$/Backend/src/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/Backend/src/routes/auth.route.js" />
+        <option value="$PROJECT_DIR$/Backend/src/app.js" />
+        <option value="$PROJECT_DIR$/Backend/src/lib/passport-config.js" />
+        <option value="$PROJECT_DIR$/Backend/src/utils/ensureAuth.js" />
+        <option value="$PROJECT_DIR$/Backend/src/controllers/auth.controller.js" />
+      </list>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

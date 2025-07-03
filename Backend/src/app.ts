@@ -1,0 +1,42 @@
+import express from "express";
+import session from "express-session";
+import passport from "passport";
+import initializePassport from "./lib/passport-config";
+import {router as authRoutes} from "./routes/auth.route";
+import {ensureAuth} from "./utils/ensureAuth";
+import { PrismaClient } from '@prisma/client';
+import {Request,Response} from "express";
+
+const prisma = new PrismaClient();
+
+
+const app=express();
+
+initializePassport(passport);
+
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+
+app.use(session({
+  secret: process.env.SECRET!,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // set to true in production
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get("/",(req:Request,res:Response)=>{
+  res.send("<a href='/api/auth/github'>auth with github</a>")
+})
+
+app.use("/api/auth",authRoutes);
+
+app.get('/api/dashboard', ensureAuth, (req, res) => {
+  res.send(`Hello`);
+});
+
+app.listen(3000);
+
+
