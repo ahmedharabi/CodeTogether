@@ -18,7 +18,8 @@ model User {
   github_id           String?    @unique
   avatar_url          String?
   bio                 String?
-  position            String?
+  role                String?
   joined_at           DateTime   @default(now())
   last_active         DateTime?  @default(now())
 }
+
