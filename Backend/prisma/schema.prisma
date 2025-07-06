@@ -21,5 +21,7 @@ model User {
   role                String?
   joined_at           DateTime   @default(now())
   last_active         DateTime?  @default(now())
+  deleted             Boolean    @default(false)
+  deletedAt           DateTime?
 }
 
