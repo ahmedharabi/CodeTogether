@@ -2,12 +2,13 @@ import {Request,Response} from "express";
 import {updatedUserSchema} from "../lib/zod";
 import {prisma} from "../lib/prisma";
 import validator from "validator";
+import {Prisma} from "@prisma/client";
 
 
 const getUserById=async (req:Request,res:Response)=>{
-    const id=req.body.params.id;
+    const id=req.params.id;
     if(!validator.isUUID(id)){
-        res.status(400).json({
+        return res.status(400).json({
             error:"Invalid user id"
         })
     }
@@ -39,8 +40,6 @@ const getUserById=async (req:Request,res:Response)=>{
         })
     }
 }
-
-
 const getAllUsers=async (req:Request,res:Response)=>{
     const page=parseInt(<string>req.query.page)||1;
     const pageSize=parseInt(<string>req.query.pageSize) || 10;
@@ -78,7 +77,7 @@ const getAllUsers=async (req:Request,res:Response)=>{
                 pageSize,
                 total
             },
-            soring:{sortBy,order}
+            sorting:{sortBy,order}
         })
     }catch (err){
         res.status(500).json({
@@ -86,9 +85,6 @@ const getAllUsers=async (req:Request,res:Response)=>{
         })
     }
 }
-
-
-
 const updateUser=async (req:Request,res:Response)=>{
     const id=req.params.id;
     //data validation using zod
@@ -111,10 +107,49 @@ const updateUser=async (req:Request,res:Response)=>{
             user:updatedUser
         })
     }catch (err:any){
-        if (err.code==="p2025"){
+        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code==="P2025"){
             return res.status(404).json({err:"User not found"});
         }
 
         return res.status(500).json({error:"Something went wrong"});
     }
 }
+const deleteUser=async (req:Request,res:Response)=>{
+    const id=req.params.id;
+    if(!validator.isUUID(id)){
+        return res.status(400).json( {
+            error:"Invalid user Id"
+        })
+    }
+    try {
+        const user = await prisma.user.findUnique({ where: { id } });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (user.deleted) {
+            return res.status(400).json({ error: 'User already deleted' });
+        }
+
+        await prisma.user.update({
+            where:{id},
+            data:{
+                deleted:true,
+                deletedAt: new Date()
+            }
+        })
+        return res.status(200).json({
+            message:"User deleted successfully"
+        })
+    }catch (err:any){
+        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        return res.status(500).json({
+            error:"Something went wrong"
+        })
+    }
+}
+
+export {deleteUser,getUserById,getAllUsers,updateUser}
