@@ -5,7 +5,7 @@ import validator from "validator";
 import {Prisma} from "@prisma/client";
 
 
-const getUserById=async (req:Request,res:Response)=>{
+const getUserById=async (req:Request,res:Response):Promise<any>=>{
     const id=req.params.id;
     if(!validator.isUUID(id)){
         return res.status(400).json({
@@ -40,7 +40,7 @@ const getUserById=async (req:Request,res:Response)=>{
         })
     }
 }
-const getAllUsers=async (req:Request,res:Response)=>{
+const getAllUsers=async (req:Request,res:Response):Promise<any>=>{
     const page=parseInt(<string>req.query.page)||1;
     const pageSize=parseInt(<string>req.query.pageSize) || 10;
 
@@ -53,6 +53,7 @@ const getAllUsers=async (req:Request,res:Response)=>{
     try{
         const [users,total]=await Promise.all([
             prisma.user.findMany({
+                where:{deleted:false},
                 skip,
                 take:pageSize,
                 orderBy:{
@@ -85,7 +86,7 @@ const getAllUsers=async (req:Request,res:Response)=>{
         })
     }
 }
-const updateUser=async (req:Request,res:Response)=>{
+const updateUser=async (req:Request,res:Response):Promise<any>=>{
     const id=req.params.id;
     //data validation using zod
     const validation=updatedUserSchema.safeParse(req.body);
@@ -114,7 +115,7 @@ const updateUser=async (req:Request,res:Response)=>{
         return res.status(500).json({error:"Something went wrong"});
     }
 }
-const deleteUser=async (req:Request,res:Response)=>{
+const deleteUser=async (req:Request,res:Response):Promise<any>=>{
     const id=req.params.id;
     if(!validator.isUUID(id)){
         return res.status(400).json( {
@@ -151,5 +152,23 @@ const deleteUser=async (req:Request,res:Response)=>{
         })
     }
 }
+const getCurrentUser=async (req:Request,res:Response):Promise<any>=>{
+    if(!req.isAuthenticated()){
+        return res.status(400).json({
+            "success": false,
+            "message": "User not authenticated",
+        })
+    }
+    const user=req.user;
+    // @ts-ignore
+    const { deletedAt ,deleted,github_id,google_id,password_hash,...safeUser}=user;
+    return res.status(200).json({
+        "success":true,
+        "message":"User found successfully",
+        "data":{
+            ...safeUser
+        }
+    })
+}
 
-export {deleteUser,getUserById,getAllUsers,updateUser}
+export {deleteUser,getUserById,getAllUsers,updateUser,getCurrentUser}
