@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6e01c8-2d7b-49ea-a533-65aa5042a681" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/controllers/user.controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +32,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Backend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -35,16 +41,19 @@
     &quot;assignee&quot;: &quot;ahmedharabi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://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@github.com/ahmedharabi/CodeTogether.git&quot;,
-    &quot;accountId&quot;: &quot;f846ed51-66d6-44cc-afec-c323694a07d9&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ahmedharabi/CodeTogether.git",
+    "accountId": "f846ed51-66d6-44cc-afec-c323694a07d9"
   }
-}</component>
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -61,8 +70,8 @@
     "Node.js.test.ts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feat/auth",
-    "last_opened_file_path": "/home/ahmedharabi/WebstormProjects/codeTogether",
+    "git-widget-placeholder": "feat/user",
+    "last_opened_file_path": "/home/ahmedharabi/Desktop/Projects/CodeTogether",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -127,6 +136,7 @@
       <workItem from="1751409616065" duration="59000" />
       <workItem from="1751545537838" duration="4295000" />
       <workItem from="1751576829554" duration="1649000" />
+      <workItem from="1751813832683" duration="5550000" />
     </task>
     <servers />
   </component>
@@ -151,6 +161,22 @@
         <option value="$PROJECT_DIR$/Backend/src/controllers/auth.controller.js" />
       </list>
     </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/Backend" />
+    </ignored-roots>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
