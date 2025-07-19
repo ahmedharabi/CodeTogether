@@ -137,7 +137,7 @@ const deleteUser=async (req:Request,res:Response):Promise<any>=>{
             where:{id},
             data:{
                 deleted:true,
-                deletedAt: new Date()
+                deleted_at: new Date()
             }
         })
         return res.status(200).json({
