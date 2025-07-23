@@ -243,6 +243,4 @@ const deleteWorkspace=async (req:AuthenticatedRequest,res:Response):Promise<any>
     }
 }
 
-const createInvite=async (req:AuthenticatedRequest,res:Response):Promise<any>=>{
-
-}
+export {createWorkSpace,getWorkspaceById,updateWorkspace,deleteWorkspace,getWorkspacesForUser};
