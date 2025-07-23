@@ -27,7 +27,7 @@ app.use(session({
   cookie: { secure: false } // set to true in production
 }));
 
-app.use(passport.initialize());
+ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/",(req:Request,res:Response)=>{
