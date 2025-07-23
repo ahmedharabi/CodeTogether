@@ -36,6 +36,7 @@ model User {
   last_active         DateTime?  @default(now())
   deleted             Boolean    @default(false)
   deleted_at           DateTime?
+  invites             Invite[]
 }
 model Workspace {
   id                  String     @id @default(uuid())
@@ -48,6 +49,7 @@ model Workspace {
   workspaceMembers    WorkspaceMember[]
   deleted             Boolean    @default(false)
   deleted_at          DateTime?
+  invites             Invite[]
 }
 
 model WorkspaceMember {
@@ -58,4 +60,16 @@ model WorkspaceMember {
   role        Role      @default(MEMBER)
   joined_at   DateTime  @default(now())
   @@id([userId, workspaceId])
+}
+
+model Invite {
+  id          String   @id @default(uuid()) // or use nanoid for shorter codes
+  code        String   @unique              // the actual invite code
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?                    // optional
+  used        Boolean  @default(false)     // optional: one-time use
+  createdBy   User     @relation(fields: [userId], references: [id])
+  userId String
 }

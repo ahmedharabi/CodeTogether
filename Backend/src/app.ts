@@ -4,6 +4,8 @@ import passport from "passport";
 import initializePassport from "./lib/passport-config";
 import {router as authRoutes} from "./routes/auth.route";
 import {router as userRoutes} from "./routes/user.route";
+import {router as inviteRoutes} from "./routes/invite.route";
+import {router as workspaceRoutes} from "./routes/workspace.route";
 import {ensureAuth} from "./utils/ensureAuth";
 import { PrismaClient } from '@prisma/client';
 import {Request,Response} from "express";
@@ -34,6 +36,8 @@ app.get("/",(req:Request,res:Response)=>{
 
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
+app.use("/api/invite",inviteRoutes);
+app.use("/api/workspaces",workspaceRoutes);
 
 app.get('/api/dashboard', ensureAuth, (req, res) => {
   res.send(`Hello`);

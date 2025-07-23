@@ -33,3 +33,5 @@ const removeMember=async (workspaceId:string,userId:string)=>{
         }
     });
 }
+
+export {addMember,removeMember};
