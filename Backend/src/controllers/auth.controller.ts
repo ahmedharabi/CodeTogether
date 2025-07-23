@@ -19,4 +19,4 @@ const logout=(req:Request,res:Response)=>{
         res.redirect("/api/auth/login");
     })
 }
-export{register,logout,};
+ export{register,logout,};
