@@ -59,7 +59,7 @@ model WorkspaceMember {
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   role        Role      @default(MEMBER)
   joined_at   DateTime  @default(now())
-  @@id([userId, workspaceId])
+   @@id([userId, workspaceId])
 }
 
 model Invite {
