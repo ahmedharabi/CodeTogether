@@ -11,3 +11,5 @@ dist
 .env
 .vscode/*
 /generated/prisma
+../leaks.json
+../.idea
