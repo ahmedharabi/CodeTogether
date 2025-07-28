@@ -9,7 +9,12 @@ const projectExists=async (req:Request,res:Response,next:NextFunction)=>{
         });
         if(project){
             next();
+        }else {
+            throw new Error("Project does not exist")
         }
+
+    }else {
+        throw new Error("invalid projectId")
     }
 }
 const projectExistsInWorkspace=async (req:Request,res:Response,next:NextFunction)=>{
@@ -21,9 +26,34 @@ const projectExistsInWorkspace=async (req:Request,res:Response,next:NextFunction
         });
         if(project!.workspaceId==workspaceId){
             next();
+        }else {
+            throw new Error("Project doesn't exist in this workspace")
         }
+    }else {
+        throw new Error("Invalid projectId or WorkspaceId")
     }
 }
-const projectHasNoDevenv=async (req:Request,res:Response)=>{
-
+const projectHasNoDevEnv=async (req:Request,res:Response,next:NextFunction)=>{
+    const projectId=req.params.projectId;
+    const project=await prisma.project.findUnique({
+        where:{id:projectId},
+        include:{dev_env:true}
+    })
+    if(!(project!.dev_env)){
+        next();
+    }else {
+        throw new Error("Project has a dev Environment")
+    }
 }
+const projectHasDevEnv=async (req:Request,res:Response,next:NextFunction)=>{
+    const projectId=req.params.projectId;
+    const project=await prisma.project.findUnique({
+        where:{id:projectId},
+        include:{dev_env:true}
+    })
+    if(project!.dev_env){
+        next();
+    }
+}
+
+export {projectHasNoDevEnv,projectHasDevEnv,projectExists,projectExistsInWorkspace,}
