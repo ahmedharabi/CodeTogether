@@ -13,3 +13,4 @@ dist
 /generated/prisma
 ../leaks.json
 ../.idea
+./volumes

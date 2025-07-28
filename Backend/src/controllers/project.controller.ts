@@ -1,44 +1,39 @@
 import {Response, Request, request} from "express";
 import {prisma} from "../lib/prisma";
+import {toSlug} from "../lib/slugify";
 
 
-const creatProject=async (req:Request,res:Response)=>{
-    if(!req.isAuthenticated()){
-        return res.status(400).json({
+const createProject=async (req:Request,res:Response):Promise<any>=>{
+
+    try{
+        const workspaceId = req.params.workspaceId;
+        // @ts-ignore
+        const userId = req.user.id;
+
+        const workspace = await prisma.workspace.findUnique({
+            where: {id: workspaceId}
+        })
+
+        const name = req.body.name;
+
+        const project = await prisma.project.create({
+            data: {
+                name, workspaceId, slug: toSlug(name)
+            }
+        })
+        return res.status(200).json({
+            "success":true,
+            "message":"project created successfully",
+            "data":project
+        })
+    }catch (error:any){
+        console.log(error.message)
+        return res.status(500).json({
             "success":false,
-            "message":"user not authenticated"
+            "message":"Something went wrong"
         })
     }
-    const workspaceId=req.params.workspaceId;
-    // @ts-ignore
-    const userId=req.user.id;
-    if(!workspaceId || userId){
-        return res.status(400).json({
-            "success":false,
-            "message":"workspaceid and userId must be valid"
-        })
-    }
-    const workspace=await prisma.workspace.findUnique({
-        where :{id:workspaceId}
-    })
-    if(!workspace){
-        return res.status(404).json({
-            "success":false,
-            "message":"Invalid workspaceId"
-        })
-    }
-    const isOwner=(workspace!.owner_id==userId)
-    if(!isOwner){
-        return res.status(403).json({
-            "success":false,
-            "message":"Only workspace owner can create projects"
-        })
-    }
-    const project=await prisma.project.create({
-        data:{
-            
-        }
-    })
+
 
 
 
@@ -47,6 +42,9 @@ const creatProject=async (req:Request,res:Response)=>{
 
 
 }
-const getProjectById
-const updateProject
-const deleteProject
+// const getProjectById
+// const updateProject
+// const deleteProject
+
+
+export {createProject}

@@ -83,7 +83,6 @@ model Project{
   workspaceId         String
   dev_env             DevEnvironment?
   workspace           Workspace   @relation(fields: [workspaceId],references: [id])
-
 }
 model DevEnvironment {
   id         String   @id @default(uuid())
