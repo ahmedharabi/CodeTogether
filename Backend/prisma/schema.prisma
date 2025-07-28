@@ -50,26 +50,45 @@ model Workspace {
   deleted             Boolean    @default(false)
   deleted_at          DateTime?
   invites             Invite[]
+  projects            Project[]
 }
 
 model WorkspaceMember {
-  userId      String
-  workspaceId String
-  user        User      @relation(fields: [userId], references: [id])
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  role        Role      @default(MEMBER)
-  joined_at   DateTime  @default(now())
-   @@id([userId, workspaceId])
+  userId              String
+  workspaceId         String
+  user                User        @relation(fields: [userId], references: [id])
+  workspace           Workspace   @relation(fields: [workspaceId], references: [id])
+  role                Role        @default(MEMBER)
+  joined_at           DateTime    @default(now())
+  @@id([userId, workspaceId])
 }
 
 model Invite {
-  id          String   @id @default(uuid()) // or use nanoid for shorter codes
-  code        String   @unique              // the actual invite code
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  workspaceId String
-  createdAt   DateTime @default(now())
-  expiresAt   DateTime?                    // optional
-  used        Boolean  @default(false)     // optional: one-time use
-  createdBy   User     @relation(fields: [userId], references: [id])
-  userId String
+  id                  String      @id @default(uuid()) // or use nanoid for shorter codes
+  code                String      @unique              // the actual invite code
+  workspace           Workspace   @relation(fields: [workspaceId], references: [id])
+  workspaceId         String
+  createdAt           DateTime    @default(now())
+  expiresAt           DateTime?                    // optional
+  used                Boolean     @default(false)     // optional: one-time use
+  createdBy           User        @relation(fields: [userId], references: [id])
+  userId              String
+}
+model Project{
+  id                  String      @id @default(uuid())
+  name                String      @unique
+  slug                String
+  repo_url            String?
+  created_at          DateTime    @default(now())
+  workspaceId         String
+  dev_env             DevEnvironment?
+  workspace           Workspace   @relation(fields: [workspaceId],references: [id])
+}
+model DevEnvironment {
+  id         String   @id @default(uuid())
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  String   @unique
+  path       String?     // e.g., /srv/workspaces/{workspaceId}/{projectId}/dev-env
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

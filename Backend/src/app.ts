@@ -43,6 +43,6 @@ app.get('/api/dashboard', ensureAuth, (req, res) => {
   res.send(`Hello`);
 });
 
-app.listen(3000);
+app.listen(3001);
 
 
