@@ -1,6 +1,8 @@
 import express from "express";
 import session from "express-session";
 import passport from "passport";
+import rateLimit from 'express-rate-limit';
+
 import initializePassport from "./lib/passport-config";
 import {router as authRoutes} from "./routes/auth.route";
 import {router as userRoutes} from "./routes/user.route";
@@ -15,6 +17,11 @@ const prisma = new PrismaClient();
 
 
 const app=express();
+const apiLimiter=rateLimit({
+  max: 100,
+  message: 'Too many requests, please try again later.',
+  windowMs: 15 * 60 * 1000,
+})
 setupSignalHandler();
 initializePassport(passport);
 
@@ -35,10 +42,10 @@ app.get("/",(req:Request,res:Response)=>{
   res.send("<a href='/api/auth/github'>auth with github</a>")
 })
 
-app.use("/api/auth",authRoutes);
-app.use("/api/users",userRoutes);
-app.use("/api/invite",inviteRoutes);
-app.use("/api/workspaces",workspaceRoutes);
+app.use("/api/auth",apiLimiter,authRoutes);
+app.use("/api/users",apiLimiter,userRoutes);
+app.use("/api/invite",apiLimiter,inviteRoutes);
+app.use("/api/workspaces",apiLimiter,workspaceRoutes);
 
 app.get('/api/dashboard', ensureAuth, (req, res) => {
   res.send(`Hello`);
