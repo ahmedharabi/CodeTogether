@@ -57,8 +57,16 @@ const startDevEnv=async (req:Request,res:Response):Promise<any>=>{
             where: {id: projectId},
             include: {dev_env: true}
         })
-        const devEnv = project!.dev_env;
-        const IDEContainer = createTheiaIDEContainer(devEnv!.path!)
+        let devEnv = project!.dev_env;
+        const IDEContainer =await createTheiaIDEContainer(devEnv!.path!)
+        devEnv=await prisma.devEnvironment.update({
+            where:{id:devEnv!.id},
+            data:{
+                containerId:IDEContainer.id
+            }
+        })
+
+        console.log(IDEContainer);
         return res.status(200).json({
             "sucess":true,
             "message":"dev Envirnoment started successfully",

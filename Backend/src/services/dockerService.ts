@@ -2,6 +2,10 @@ import {docker} from "../lib/dockerClient"
 import {nanoid} from "nanoid";
 import {getFreePort} from "../lib/get-port";
 
+
+
+const startedContainers: string[]=[];
+
 const createTheiaIDEContainer=async (volume:string)=>{
     const port=await getFreePort();
     console.log("port from docker:",port)
@@ -17,6 +21,21 @@ const createTheiaIDEContainer=async (volume:string)=>{
         }
     })
     await container.start();
+    startedContainers.push(container.id);
     return container
 }
-export {createTheiaIDEContainer}
+const stopAllContainers=async ()=>{
+    for(const id of startedContainers){
+        try {
+            const container=docker.getContainer(id);
+            await container.stop();
+            console.log(`🛑 Stopped container: ${id}`);
+        }catch (error:any){
+            console.error(`❌ Error stopping container ${id}: ${error.message}`);
+        }
+    }
+}
+
+
+
+export {createTheiaIDEContainer,stopAllContainers}

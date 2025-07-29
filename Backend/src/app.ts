@@ -9,12 +9,13 @@ import {router as workspaceRoutes} from "./routes/workspace.route";
 import {ensureAuth} from "./utils/ensureAuth";
 import { PrismaClient } from '@prisma/client';
 import {Request,Response} from "express";
+import {setupSignalHandler} from "./utils/signalHandlers";
 
 const prisma = new PrismaClient();
 
 
 const app=express();
-
+setupSignalHandler();
 initializePassport(passport);
 
 app.use(express.urlencoded({extended:true}));

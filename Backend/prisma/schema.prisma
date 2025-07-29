@@ -83,12 +83,16 @@ model Project{
   workspaceId         String
   dev_env             DevEnvironment?
   workspace           Workspace   @relation(fields: [workspaceId],references: [id])
+  deleted             Boolean    @default(false)
+  deleted_at          DateTime?
+
 }
 model DevEnvironment {
-  id         String   @id @default(uuid())
-  project    Project  @relation(fields: [projectId], references: [id])
-  projectId  String   @unique
-  path       String?     // e.g., /srv/workspaces/{workspaceId}/{projectId}/dev-env
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String   @id @default(uuid())
+  project       Project  @relation(fields: [projectId], references: [id])
+  projectId     String   @unique
+  path          String?// e.g., /srv/workspaces/{workspaceId}/{projectId}/dev-env
+  containerId   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

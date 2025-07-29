@@ -42,9 +42,65 @@ const createProject=async (req:Request,res:Response):Promise<any>=>{
 
 
 }
-// const getProjectById
-// const updateProject
-// const deleteProject
+const getProjectById=async (req:Request,res:Response):Promise<any>=>{
+    try{
+        const projectId = req.params.projectId;
+        const project = await prisma.project.findUnique({
+            where: {id: projectId},
+            include:{dev_env:true}
+        })
+        return res.status(200).json({
+            "success":true,
+            "message":"Project found successfully",
+            "data":project
+        })
+    }catch (error:any){
+        console.log(error.message);
+        return res.status(500).json({
+            "success":false,
+            "message":"Something went wrong",
+        })
+    }
+
+}
+const updateProject=async (req:Request,res:Response):Promise<any>=>{
+    try{
+        const projectId=req.params.projectId;
+        const {name, repo_url} = req.body;
+        const updateProject=await prisma.project.update({
+            where:{id:projectId},
+            data:{
+                name,
+                repo_url
+            }
+        })
+        return res.status(200).json({
+            "success":true,
+            "message":"project updated successfully",
+            data:{
+                updateProject
+            }
+        })
+
+    }catch (error:any){
+        console.error(error.message);
+        return res.status(500).json({
+            "success":false,
+            "message":"Something went wrong"
+        })
+    }
+
+}
+const deleteProject=async (req:Request,res:Response):Promise<any>=>{
+    const projectId=req.params.projectId;
+    const deletedProject=await prisma.project.update({
+        where:{id:projectId},
+        data:{
+            deleted:true,
+            deleted_at:new Date()
+        }
+    })
+}
 
 
-export {createProject}
+export {createProject,getProjectById,updateProject,deleteProject}
