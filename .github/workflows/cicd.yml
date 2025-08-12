@@ -7,7 +7,7 @@ on:
       - feature/*
 jobs:
   secrets-scanning:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     name: secrets scanning
     steps:
       - name: checkout repo
@@ -18,7 +18,7 @@ jobs:
   unit-testing:
 
     needs: secrets-scanning
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     name: unit-testing
     steps:
       - name: checkout repo
