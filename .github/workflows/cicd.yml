@@ -34,8 +34,11 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: install dependencies
-        run: npm install
-        working-directory: backend
+        run: |
+          cd backend
+          npm install
+            
+        
 
       - name: test the app
         run: npm test
