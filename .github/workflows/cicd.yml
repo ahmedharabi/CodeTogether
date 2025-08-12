@@ -50,6 +50,9 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_CALLBACK_URL: ${{ secrets.GOOGLE_CALLBACK_URL }}
+          GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID_GITHUB }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_GITHUB }}
+          GITHUB_CALLBACK_URL: ${{ secrets.CALLBACK_URL_GITHUB }}
 
       - name: upload test results
         uses: "actions/upload-artifact@v4"
