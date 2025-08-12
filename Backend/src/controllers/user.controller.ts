@@ -35,6 +35,9 @@ const getUserById=async (req:Request,res:Response):Promise<any>=>{
         })
 
     }catch (err:any){
+        console.error('Route error:', err);
+        console.error('Error message:', err.message);
+        console.error('Error stack:', err.stack);
         return res.status(500).json({
             error:"Something went wrong"
         })
