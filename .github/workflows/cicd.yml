@@ -84,7 +84,16 @@ jobs:
           tags: ${{vars.DOCKER_USERNAME}}/codetogether:latest
 
   vulnerability-scanning:
-        name: Run Trivy vulnerability scanner
+    name: Run Trivy vulnerability scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t codetogether:latest .
+
+      - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: 'codetogether:latest'
