@@ -7,7 +7,7 @@ on:
       - feature/*
 jobs:
   secrets-scanning:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: secrets scanning
     steps:
       - name: checkout repo
@@ -18,7 +18,7 @@ jobs:
   unit-testing:
 
     needs: secrets-scanning
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: unit-testing
     steps:
       - name: checkout repo
@@ -35,9 +35,7 @@ jobs:
 
       - name: install dependencies
         run: |
-          ls -a
           cd Backend
-          ls -a
           npm install
             
         
@@ -55,32 +53,35 @@ jobs:
           GITHUB_CALLBACK_URL: ${{ secrets.CALLBACK_URL_GITHUB }}
           SECRET: ${{ secrets.SECRET }}
 
+      - name: Create test results file if missing
+        run: touch ./test-results.xml
+
       - name: upload test results
         uses: "actions/upload-artifact@v4"
         with:
           name: test-result
           path: ./test-results.xml
-# docker-build:
-#    name: docker-build
-#
-#    runs-on: ubuntu-latest
-#    needs:
-#      - unit-testing
-#    steps:
-#      - name: repo checkout
-#        uses: actions/checkout@v4
-#
-#      - name: login to docker
-#        uses: docker/login-action@v3
-#        with:
-#          registry:
-#          username: ${{vars.DOCKER_USERNAME}}
-#          password: ${{secrets.DOCKER_PASSWORD}}
-#      - name: build and push to dockerhub
-#        uses: docker/build-push-action@v6
-#        with:
-#          push: true
-#          tags: ${{vars.DOCKER_USERNAME}}/cicd-app:latest
+  docker-build:
+    name: docker-build
+
+    runs-on: ubuntu-latest
+    needs:
+      - unit-testing
+    steps:
+      - name: repo checkout
+        uses: actions/checkout@v4
+
+      - name: login to docker
+        uses: docker/login-action@v3
+        with:
+
+          username: ${{vars.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
+      - name: build and push to dockerhub
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{vars.DOCKER_USERNAME}}/codetogether:latest
 
 #  dev-deploy:
 #    name: deploy to k8s cluster
