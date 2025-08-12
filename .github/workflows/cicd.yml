@@ -43,7 +43,9 @@ jobs:
         
 
       - name: test the app
-        run: npm test
+        run: | 
+              cd Backend
+              npm test
 
       - name: upload test results
         uses: "actions/upload-artifact@v4"
