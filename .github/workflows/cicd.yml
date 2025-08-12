@@ -83,5 +83,12 @@ jobs:
           push: true
           tags: ${{vars.DOCKER_USERNAME}}/codetogether:latest
 
+  vulnerability-scanning:
+        name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'codetogether:latest'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 #  dev-deploy:
 #    name: deploy to k8s cluster
