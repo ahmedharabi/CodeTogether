@@ -22,6 +22,10 @@ describe('GET api/users/:id', () => {
         const invalidId = '123-not-uuid';
         const res = await request(app).get(`/api/users/${invalidId}`);
 
+        console.log('Response status:', res.status);
+        console.log('Response body:', res.body);
+        console.log('Response headers:', res.headers);
+
         expect(res.status).toBe(400);
         expect(res.body).toEqual({error: 'Invalid user id'});
     });
