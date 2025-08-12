@@ -51,6 +51,5 @@ app.get('/api/dashboard', ensureAuth, (req, res) => {
   res.send(`Hello`);
 });
 
-app.listen(3001);
-
+export {app};
 

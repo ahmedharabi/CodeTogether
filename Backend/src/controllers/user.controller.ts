@@ -108,7 +108,7 @@ const updateUser=async (req:Request,res:Response):Promise<any>=>{
             user:updatedUser
         })
     }catch (err:any){
-        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code==="P2025"){
+        if ( err.code==="P2025"){
             return res.status(404).json({err:"User not found"});
         }
 
@@ -144,7 +144,7 @@ const deleteUser=async (req:Request,res:Response):Promise<any>=>{
             message:"User deleted successfully"
         })
     }catch (err:any){
-        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+        if ( err.code === 'P2025') {
             return res.status(404).json({ error: 'User not found' });
         }
         return res.status(500).json({
