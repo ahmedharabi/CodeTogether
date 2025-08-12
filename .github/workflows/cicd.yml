@@ -84,20 +84,23 @@ jobs:
           tags: ${{vars.DOCKER_USERNAME}}/codetogether:latest
 
   vulnerability-scanning:
+    needs: [secrets-scanning,unit-testing, docker-build]
     name: Run Trivy vulnerability scanner
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t codetogether:latest .
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: 'codetogether:latest'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+            image-ref: '${{vars.DOCKER_USERNAME}}/codetogether:latest'
+            format: 'sarif'
+            output: 'trivy-results.sarif'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+            sarif_file: 'trivy-results.sarif'
 #  dev-deploy:
 #    name: deploy to k8s cluster
