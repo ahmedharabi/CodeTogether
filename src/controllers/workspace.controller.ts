@@ -1,7 +1,7 @@
 import {Response,Request} from "express";
 import {prisma} from "../lib/prisma";
 import {toSlug} from "../lib/slugify";
-import { User } from '@prisma/client';
+
 
 
 interface AuthenticatedRequest extends Request {
@@ -35,6 +35,7 @@ const getWorkspacesForUser=async (req:AuthenticatedRequest,res:Response):Promise
     try{
 
         const userId = req.user.id;
+
         const user = await prisma.user.findUnique({
             where: {id: userId},
             include: {

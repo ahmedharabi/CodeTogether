@@ -1,12 +1,21 @@
-FROM node:20-alpine
+FROM node:20-alpine as builder
 WORKDIR /app
 
-COPY Backend/package*.json ./
-RUN npm install
-
+COPY ./package*.json ./
+RUN npm ci
 COPY . .
 
+RUN npm run build
 
-EXPOSE 3000
+FROM node:20-alpine
 
-CMD ["npm","start"]
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+RUN  npx prisma generate
+
+
+
+CMD ["sh", "-c", "npx prisma migrate dev  && node ./dist/server.js"]
