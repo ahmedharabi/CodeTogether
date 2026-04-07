@@ -35,14 +35,12 @@ jobs:
 
       - name: install dependencies
         run: |
-          cd Backend
           npm install
             
         
 
       - name: test the app
         run: | 
-              cd Backend
               npm test
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
