@@ -82,15 +82,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t code-together:latest .
+          docker build -t ${{ secrets.ECR_REPOSITORY }}:latest .
 
       - name: Tag Docker image
         run: |
-          docker tag code-together:latest ${{ secrets.ECR_REPOSITORY }}/code-together:latest
+          docker tag ${{ secrets.ECR_REPOSITORY }}:latest ${{ secrets.ECR_REPOSITORY }}:latest
 
       - name: push to ecr
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY }}/code-together:latest
+          docker push ${{ secrets.ECR_REPOSITORY }}:latest
      
 
       
