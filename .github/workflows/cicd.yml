@@ -120,9 +120,9 @@ jobs:
             -e GOOGLE_CLIENT_SECRET='${{secrets.GOOGLE_CLIENT_SECRET}}' \
             -e GOOGLE_CALLBACK_URL='${{secrets.GOOGLE_CALLBACK_URL}}' \
             -e DATABASE_URL='${{secrets.DATABASE_URL}}' \
-            -e GITHUB_CLIENT_ID='${{secrets.GITHUB_CLIENT_ID}}' \
-            -e GITHUB_CLIENT_SECRET='${{secrets.GITHUB_CLIENT_SECRET}}' \
-            -e GITHUB_CALLBACK_URL='${{secrets.GITHUB_CALLBACK_URL}}' \
+            -e GITHUB_CLIENT_ID='${{secrets.CLIENT_ID_GITHUB}}' \
+            -e GITHUB_CLIENT_SECRET='${{secrets.CLIENT_SECRET_GITHUB}}' \
+            -e GITHUB_CALLBACK_URL='${{secrets.CALLBACK_URL_GITHUB}}' \
             --network my-network \
             ${{ secrets.ECR_REPOSITORY }}:latest
             
