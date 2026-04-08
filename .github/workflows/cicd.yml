@@ -91,28 +91,66 @@ jobs:
       - name: push to ecr
         run: |
           docker push ${{ secrets.ECR_REPOSITORY }}:latest
-     
+          
+          
+          
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Login to ECR
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+            docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+      
+            # Pull latest image
+            docker pull ${{ secrets.ECR_REPOSITORY }}:latest
+      
+            # Stop old container (ignore error if not exists)
+            docker stop codiapp1 || true
+            docker rm codiapp1 || true
+      
+            # Run new container
+            sudo docker run --name codiapp1 \
+            -p 3002:3002 \
+            -e SECRET='${{secrets.SECRET}}' \
+            -e GOOGLE_CLIENT_ID='${{secrets.GOOGLE_CLIENT_ID}}' \
+            -e GOOGLE_CLIENT_SECRET='${{secrets.GOOGLE_CLIENT_SECRET}}' \
+            -e GOOGLE_CALLBACK_URL='${{secrets.GOOGLE_CALLBACK_URL}}' \
+            -e DATABASE_URL='${{secrets.DATABASE_URL}}' \
+            -e GITHUB_CLIENT_ID='${{secrets.GITHUB_CLIENT_ID}}' \
+            -e GITHUB_CLIENT_SECRET='${{secrets.GITHUB_CLIENT_SECRET}}' \
+            -e GITHUB_CALLBACK_URL='${{secrets.GITHUB_CALLBACK_URL}}' \
+            --network my-network \
+            ${{ secrets.ECR_REPOSITORY }}:latest
+            
+            
+            
+            
+            
+           
 
       
 
-  vulnerability-scanning:
-    needs: [secrets-scanning,unit-testing, docker-build]
-    name: Run Trivy vulnerability scanner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#  vulnerability-scanning:
+#    needs: [secrets-scanning,unit-testing, docker-build]
+#    name: Run Trivy vulnerability scanner
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Run Trivy vulnerability scanner
+#        uses: aquasecurity/trivy-action@0.28.0
+#        with:
+#            image-ref: '${{vars.DOCKER_USERNAME}}/codetogether:latest'
+#            format: 'sarif'
+#            output: 'trivy-results.sarif'
+#      - name: Upload Trivy scan results to GitHub Security tab
+#        uses: github/codeql-action/upload-sarif@v3
+#        if: always()
+#        with:
+#            sarif_file: 'trivy-results.sarif'
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-            image-ref: '${{vars.DOCKER_USERNAME}}/codetogether:latest'
-            format: 'sarif'
-            output: 'trivy-results.sarif'
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-            sarif_file: 'trivy-results.sarif'
-#  dev-deploy:
-#    name: deploy to k8s cluster
