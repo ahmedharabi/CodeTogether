@@ -21,7 +21,7 @@ jobs:
   unit-testing:
 
     needs: secrets-scanning
-    runs-on: ubuntu-${GITHUB_SHA}
+    runs-on: ubuntu-latest
     name: unit-testing
     steps:
       - name: checkout repo
