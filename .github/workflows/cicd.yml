@@ -94,39 +94,43 @@ jobs:
           
           
           
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            # Login to ECR
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-            docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
-      
-            # Pull latest image
-            docker pull ${{ secrets.ECR_REPOSITORY }}:latest
-      
-            # Stop old container (ignore error if not exists)
-            docker stop codiapp1 || true
-            docker rm codiapp1 || true
-      
-            # Run new container
-            sudo docker run -d --name codiapp1 \
-            -p 3002:3002 \
-            -e SECRET='${{secrets.SECRET}}' \
-            -e GOOGLE_CLIENT_ID='${{secrets.GOOGLE_CLIENT_ID}}' \
-            -e GOOGLE_CLIENT_SECRET='${{secrets.GOOGLE_CLIENT_SECRET}}' \
-            -e GOOGLE_CALLBACK_URL='${{secrets.GOOGLE_CALLBACK_URL}}' \
-            -e DATABASE_URL='${{secrets.DATABASE_URL}}' \
-            -e GITHUB_CLIENT_ID='${{secrets.CLIENT_ID_GITHUB}}' \
-            -e GITHUB_CLIENT_SECRET='${{secrets.CLIENT_SECRET_GITHUB}}' \
-            -e GITHUB_CALLBACK_URL='${{secrets.CALLBACK_URL_GITHUB}}' \
-            --network my-network \
-            ${{ secrets.ECR_REPOSITORY }}:latest
-            
-            
+#      - name: Deploy to EC2
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ${{ secrets.EC2_USER }}
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#          script: |
+#            # Login to ECR
+#            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+#            docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+#
+#            # Pull latest image
+#            docker pull ${{ secrets.ECR_REPOSITORY }}:latest
+#
+#            # Stop old container (ignore error if not exists)
+#            docker stop codiapp1 || true
+#            docker rm codiapp1 || true
+#
+#            # Run new container
+#            sudo docker run -d --name codiapp1 \
+#            -p 3002:3002 \
+#            -e SECRET='${{secrets.SECRET}}' \
+#            -e GOOGLE_CLIENT_ID='${{secrets.GOOGLE_CLIENT_ID}}' \
+#            -e GOOGLE_CLIENT_SECRET='${{secrets.GOOGLE_CLIENT_SECRET}}' \
+#            -e GOOGLE_CALLBACK_URL='${{secrets.GOOGLE_CALLBACK_URL}}' \
+#            -e DATABASE_URL='${{secrets.DATABASE_URL}}' \
+#            -e GITHUB_CLIENT_ID='${{secrets.CLIENT_ID_GITHUB}}' \
+#            -e GITHUB_CLIENT_SECRET='${{secrets.CLIENT_SECRET_GITHUB}}' \
+#            -e GITHUB_CALLBACK_URL='${{secrets.CALLBACK_URL_GITHUB}}' \
+#            --network my-network \
+#            ${{ secrets.ECR_REPOSITORY }}:latest
+#
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region us-east-1 --name cicd-cluster
+      - name: Deploy to EKS
+        run: |
+          kubectl set image deployment/code-together app=${{ secrets.ECR_REPOSITORY }}:latest
             
             
             
