@@ -130,7 +130,7 @@ jobs:
         run: aws eks update-kubeconfig --region us-east-1 --name cicd-cluster
       - name: Deploy to EKS
         run: |
-          kubectl set image deployment/code-together app=${{ secrets.ECR_REPOSITORY }}:latest
+          kubectl set image deployment/code-together code-together=${{ secrets.ECR_REPOSITORY }}:latest
             
             
             
