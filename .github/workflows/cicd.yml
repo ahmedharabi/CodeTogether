@@ -7,7 +7,7 @@ on:
       - feature/*
 jobs:
   secrets-scanning:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-${GITHUB_SHA}
     name: secrets scanning
     steps:
       - name: checkout repo
@@ -21,7 +21,7 @@ jobs:
   unit-testing:
 
     needs: secrets-scanning
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-${GITHUB_SHA}
     name: unit-testing
     steps:
       - name: checkout repo
@@ -65,7 +65,7 @@ jobs:
   docker-build:
     name: docker-build
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-${GITHUB_SHA}
     needs:
       - unit-testing
     steps:
@@ -85,15 +85,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.ECR_REPOSITORY }}:latest .
+          docker build -t ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA} .
 
       - name: Tag Docker image
         run: |
-          docker tag ${{ secrets.ECR_REPOSITORY }}:latest ${{ secrets.ECR_REPOSITORY }}:latest
+          docker tag ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA} ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA}
 
       - name: push to ecr
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY }}:latest
+          docker push ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA}
           
           
           
@@ -108,8 +108,8 @@ jobs:
 #            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
 #            docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
 #
-#            # Pull latest image
-#            docker pull ${{ secrets.ECR_REPOSITORY }}:latest
+#            # Pull ${GITHUB_SHA} image
+#            docker pull ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA}
 #
 #            # Stop old container (ignore error if not exists)
 #            docker stop codiapp1 || true
@@ -127,13 +127,13 @@ jobs:
 #            -e GITHUB_CLIENT_SECRET='${{secrets.CLIENT_SECRET_GITHUB}}' \
 #            -e GITHUB_CALLBACK_URL='${{secrets.CALLBACK_URL_GITHUB}}' \
 #            --network my-network \
-#            ${{ secrets.ECR_REPOSITORY }}:latest
+#            ${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA}
 #
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region us-east-1 --name cicd-cluster
       - name: Deploy to EKS
         run: |
-          kubectl set image deployment/code-together code-together=${{ secrets.ECR_REPOSITORY }}:latest
+          kubectl set image deployment/code-together code-together=${{ secrets.ECR_REPOSITORY }}:${GITHUB_SHA}
             
             
             
@@ -144,7 +144,7 @@ jobs:
 #  vulnerability-scanning:
 #    needs: [secrets-scanning,unit-testing, docker-build]
 #    name: Run Trivy vulnerability scanner
-#    runs-on: ubuntu-latest
+#    runs-on: ubuntu-${GITHUB_SHA}
 #    steps:
 #      - name: Checkout code
 #        uses: actions/checkout@v4
@@ -152,7 +152,7 @@ jobs:
 #      - name: Run Trivy vulnerability scanner
 #        uses: aquasecurity/trivy-action@0.28.0
 #        with:
-#            image-ref: '${{vars.DOCKER_USERNAME}}/codetogether:latest'
+#            image-ref: '${{vars.DOCKER_USERNAME}}/codetogether:${GITHUB_SHA}'
 #            format: 'sarif'
 #            output: 'trivy-results.sarif'
 #      - name: Upload Trivy scan results to GitHub Security tab
