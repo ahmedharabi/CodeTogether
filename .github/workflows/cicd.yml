@@ -7,7 +7,7 @@ on:
       - feature/*
 jobs:
   secrets-scanning:
-    runs-on: ubuntu-${GITHUB_SHA}
+    runs-on: ubuntu-latest
     name: secrets scanning
     steps:
       - name: checkout repo
@@ -65,7 +65,7 @@ jobs:
   docker-build:
     name: docker-build
 
-    runs-on: ubuntu-${GITHUB_SHA}
+    runs-on: ubuntu-latest
     needs:
       - unit-testing
     steps:
@@ -144,7 +144,7 @@ jobs:
 #  vulnerability-scanning:
 #    needs: [secrets-scanning,unit-testing, docker-build]
 #    name: Run Trivy vulnerability scanner
-#    runs-on: ubuntu-${GITHUB_SHA}
+#    runs-on: ubuntu-latest
 #    steps:
 #      - name: Checkout code
 #        uses: actions/checkout@v4
